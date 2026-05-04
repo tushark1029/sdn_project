@@ -1,60 +1,137 @@
-# sdn_project
-# Network Utilization Monitor using SDN
+# Network Utilization Monitor using SDN 📡
 
-## Objective
-This project monitors network traffic using SDN using Mininet and POX controller.
+## 📌 Project Overview
 
-## Tools Used
-- Mininet
-- POX Controller
-- Python
+This project demonstrates real-time network traffic monitoring using Software Defined Networking (SDN). It uses Mininet for network simulation and the POX controller to analyze and monitor traffic flows between hosts.
 
-## Topology
-- 1 Switch (s1)
-- 3 Hosts (h1, h2, h3)
+---
 
-## How to Run
+## 🎯 Objective
 
-1. Start Controller:
-   cd ~/pox
-  ./pox.py forwarding.l2_learning misc.monitor
+* Monitor network traffic using SDN
+* Identify active and idle hosts
+* Analyze bandwidth usage
+* Demonstrate real-time flow monitoring
 
-2. Start Mininet:
-   sudo mn --topo single,3 --controller=remote
+---
 
-3. Generate Traffic:
-   iperf h1 h2
+## 🛠️ Tools & Technologies
 
-## Output
-- h1 → ACTIVE → High traffic
-- h2 → ACTIVE → High traffic
-- h3 → IDLE → No traffic
+* Mininet
+* POX Controller
+* Python
+* OpenFlow Protocol
 
-h1 → ACTIVE → 200000 Bytes/sec
-h2 → ACTIVE → 198000 Bytes/sec
-h3 → IDLE → 0 Bytes/sec
+---
 
-sudo ovs-ofctl -O OpenFlow10 dump-flows s1
-  cookie=0x0, duration=12.5s, table=0, n_packets=20, n_bytes=1500, actions=output:2
-  cookie=0x0, duration=12.5s, table=0, n_packets=18, n_bytes=1400, actions=output:1
+## 🏗️ Network Topology
 
-pingall
-  *** Ping: testing ping reachability
-  h1 -> h2 h3
-  h2 -> h1 h3
-  h3 -> h1 h2
-  *** Results: 0% dropped (6/6 received)
+```id="topo1"
+1 Switch (s1)
+3 Hosts (h1, h2, h3)
+```
 
+---
+
+## 🔁 Working
+
+* Hosts communicate through a virtual switch (s1)
+* POX controller monitors traffic flows
+* Traffic is generated using `iperf`
+* Network utilization is tracked in real-time
+
+---
+
+## ▶️ How to Run
+
+### 1. Start POX Controller
+
+```id="cmd1"
+cd ~/pox
+./pox.py forwarding.l2_learning misc.monitor
+```
+
+### 2. Start Mininet
+
+```id="cmd2"
+sudo mn --topo single,3 --controller=remote
+```
+
+### 3. Generate Traffic
+
+```id="cmd3"
 iperf h1 h2
-  *** Iperf: testing TCP bandwidth between h1 and h2
-  ------------------------------------------------------------
-  Client connecting to 10.0.0.2, TCP port 5001
-  TCP window size: 85.3 KB (default)
-  ------------------------------------------------------------
-  [  3] local 10.0.0.1 port 5001 connected with 10.0.0.2 port 5001
-  [ ID] Interval       Transfer     Bandwidth
-  [  3]  0.0-10.0 sec  1.10 GBytes  945 Mbits/sec
+```
 
-  
-## Conclusion
-This project demonstrates how SDN can monitor network utilization in real time.
+---
+
+## 📊 Output
+
+### 🔹 Host Activity
+
+* h1 → ACTIVE → High traffic
+* h2 → ACTIVE → High traffic
+* h3 → IDLE → No traffic
+
+### 🔹 Bandwidth
+
+```id="bandwidth"
+h1 → 200000 Bytes/sec  
+h2 → 198000 Bytes/sec  
+h3 → 0 Bytes/sec
+```
+
+---
+
+## 🔍 Flow Table (OpenFlow)
+
+```id="flow"
+sudo ovs-ofctl -O OpenFlow10 dump-flows s1
+cookie=0x0, duration=12.5s, table=0, n_packets=20, n_bytes=1500, actions=output:2
+cookie=0x0, duration=12.5s, table=0, n_packets=18, n_bytes=1400, actions=output:1
+```
+
+---
+
+## 🌐 Network Testing
+
+### Ping Test
+
+```id="ping"
+pingall
+*** Results: 0% packet loss (6/6 received)
+```
+
+### Bandwidth Test
+
+```id="iperf"
+iperf h1 h2
+Transfer: 1.10 GBytes  
+Bandwidth: 945 Mbits/sec
+```
+
+---
+
+## 📈 Observations
+
+* Active hosts generate measurable traffic
+* Idle hosts show zero utilization
+* SDN enables centralized monitoring
+* Flow tables provide packet-level insights
+
+---
+
+## 🧠 Concepts Used
+
+* Software Defined Networking (SDN)
+* OpenFlow Protocol
+* Network Monitoring
+* Traffic Analysis
+* Virtual Network Simulation
+
+---
+
+
+## 📝 Conclusion
+
+This project demonstrates how SDN can be used to monitor network utilization in real time. It highlights the advantages of centralized control and visibility in modern networking systems.
